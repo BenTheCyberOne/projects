@@ -7,10 +7,16 @@ Scrapes the BBB for businesses with given parameters using lxml and requests lib
 from lxml import html
 import requests
 def main():
-    print("### WARNING: CURRENTLY CAN ONLY BE USED WITH THE FOLLOWING OPTIONS:\n>A LOCATION\n>ACCREDITED FILER\nPlease note that in order to search for something besides 'Electrician', you must enter the FULL find_entity code during the scrapping!")
+    print("### WARNING: CURRENTLY CAN ONLY BE USED WITH THE FOLLOWING OPTIONS:\n>A LOCATION\n>ACCREDITED FILER\n>JOB TYPE (QUERY)")
     fileName = input(print("Please enter filename for output files(leave out the ext): "))
     f = open(fileName,"x")
-    loc = input(print("Please enter a location exactly like the example: (Ex. Des Moines, IA)"))
-    acc = input(print("Search for accredited businesses only? (Y or N) "))
-    entity = input(print("#OPTIONAL# Enter the find_entity EXACTLY how it appears, press enter for default (Electrician): "))
+    loc = input(print("Please enter a city: (Ex. Des Moines)"))
+    loc2 = input(print("Please enter the state: (Ex. IA)"))
+    acc = input(print("Search for accredited businesses only? (y or n) "))
+    entity = input(print("Enter the job title to scrape: "))
+    if acc == 'n':
+        filter = ""
+    else:
+        filter ="filter_accredited=1&"
+    finalLink = ("https://www.bbb.org/search?"+filter+"find_country=USA&find_loc="+loc+"%2C%20"+loc2"&find_text="+entity+"&find_type=Category&page=1&sort=Relevance/")
     page = requests.get()
